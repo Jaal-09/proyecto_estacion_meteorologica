@@ -33,13 +33,15 @@ void setup() {
     delay(1500);
 }
 
-
 void loop() {
+
+    // Lógica de refresco de datos y tiempo real
     if (millis() - tiempoUltimaActualizacion >= INTERVALO_TFT) {
         tiempoUltimaActualizacion = millis();
         
-        //Se borra el texto de iniciando pantalla
+        //Se borra el texto de iniciando pantalla en el primer ciclo
         if (primeraActualizacion) {
+
             // Se usa la función limpiarPantalla
             miPantalla.limpiarPantalla(TFT_NAVY);
             
@@ -50,11 +52,24 @@ void loop() {
             primeraActualizacion = false; 
         }
         
+        // Obtenemos los datos de tiempo de la clase especializada
+        String horaActual  = miReloj.obtenerHora();
+        String fechaActual = miReloj.obtenerFecha();
+        
+        // Datos simulados (Los que heredarán los sensores reales)
         float t_simulada = 26.7;
         float h_simulada = 55.2;
         float l_simulada = 385.0;
         
         Serial.println("[SISTEMA] Refrescando interfaz grafica.");
-        miPantalla.actualizarInterfaz(t_simulada, h_simulada, l_simulada);
+        // Enviamos hora, fecha y clima directo al manager de pantalla
+        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_simulada, h_simulada, l_simulada);
+    }
+
+    // 2. Control automático de cambio de vista lógico (Simulación táctil)
+    if (millis() - tiempoUltimoCambioVista >= INTERVALO_VISTA) {
+        tiempoUltimoCambioVista = millis();
+        Serial.println("[SISTEMA] Cambiando de vista...");
+        miPantalla.cambiarVista();
     }
 }

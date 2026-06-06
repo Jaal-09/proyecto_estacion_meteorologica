@@ -19,7 +19,7 @@ void PantallaManager::limpiarPantalla(uint16_t color) {
 
 void PantallaManager::cambiarVista() {
     vistaActual = (vistaActual == 1) ? 2 : 1;
-    
+
     // Limpieza rápida al cambiar de menú
     limpiarPantalla(TFT_NAVY); 
 }
@@ -63,5 +63,5 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
 
     // Pie de página institucional
     tft.drawLine(0, 218, 320, 218, TFT_SILVER);
-    mostrarTexto("U. DE PAMPLONA - MECATRONICA", 45, 224, 1, TFT_SILVER, TFT_NAVY);
+    mostrarTexto("U. DE PAMPLONA - MECATRÓNICA", 45, 224, 1, TFT_SILVER, TFT_NAVY);
 }
