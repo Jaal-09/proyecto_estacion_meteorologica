@@ -13,8 +13,8 @@ const unsigned long INTERVALO_VISTA = 7000;
 bool primeraActualizacion = true;               
 
 // Configuracion WIFI
-const char* WIFI_SSID = "mg52";
-const char* WIFI_PASS = "wifi1234";
+const char* WIFI_SSID = "";
+const char* WIFI_PASS = "";
 
 void setup() {
     Serial.begin(115200);

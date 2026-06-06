@@ -34,14 +34,14 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
         Serial.println("[NTP] Esperando estabilidad de red (3s)...");
         delay(3000); 
         
-        // Configurar la zona horaria de Colombia (UTC-5)
+        // Configurar la zona horaria 
         configTime(-18000, 0, "pool.ntp.org", "time.nist.gov");
         
         struct tm timeinfo;
         bool horaObtenida = false;
         int intentosNTP = 0;
         
-        // 🔄 Bucle de reintentos para el servidor de internet
+        // Bucle de reintentos para el servidor de internet
         while (!horaObtenida && intentosNTP < 5) {
             intentosNTP++;
             Serial.printf("[NTP] Intentando obtener hora (Intento %d de 5)...\n", intentosNTP);
@@ -60,7 +60,7 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
                 Serial.println("[NTP] ¡Módulo DS1307 sincronizado con éxito!");
             } else {
                 Serial.println("[WARNING] Servidor ocupado. Esperando 2 segundos para reintentar...");
-                delay(2000); // Espera estratégica antes de volver a preguntar
+                delay(2000); 
             }
         }
         
@@ -72,7 +72,7 @@ void RelojManager::sincronizarHoraPorWiFi(const char* ssid, const char* password
         Serial.println("\n[ERROR Wi-Fi] No se pudo conectar a la red.");
     }
 
-    // 🕒 Dejamos el Wi-Fi encendido 2 segundos más por seguridad antes de tumbarlo
+    // Dejamos el Wi-Fi encendido 2 segundos más por seguridad antes de tumbarlo
     delay(2000);
     WiFi.disconnect(true);
     WiFi.mode(WIFI_OFF);
