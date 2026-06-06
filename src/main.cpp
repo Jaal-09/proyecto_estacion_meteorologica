@@ -1,9 +1,11 @@
 #include <Arduino.h>
 #include "PantallaManager.h"
 #include "RelojManager.h"
+#include "Bme280Manager.h"
 
 PantallaManager miPantalla;
 RelojManager miReloj;
+Bme280Manager miBme;
 
 unsigned long tiempoUltimaActualizacion = 0;
 unsigned long tiempoUltimoCambioVista = 0;
@@ -23,6 +25,7 @@ void setup() {
     Serial.println("[SISTEMA] Iniciando TFT y Reloj...");
     miPantalla.iniciar();
     miReloj.iniciar();
+    miBme.iniciar();
     
     miPantalla.mostrarTexto("Sincronizando hora ...", 10, 100, 2, TFT_WHITE, TFT_NAVY);
     
@@ -45,11 +48,15 @@ void loop() {
         String horaActual  = miReloj.obtenerHora();
         String fechaActual = miReloj.obtenerFecha();
         
-        float t_simulada = 26.7;
-        float h_simulada = 55.2;
-        float l_simulada = 385.0;
+       // 🎯 Lecturas reales con el nuevo formato POO profesional
+        float t_real = miBme.obtenerTemperatura();
+        float h_real = miBme.obtenerHumedad();
+        float l_simulada = 420.0;
+
+        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %%\n", t_real, h_real);
         
-        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_simulada, h_simulada, l_simulada);
+        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_simulada);
+        
     }
 
     if (millis() - tiempoUltimoCambioVista >= INTERVALO_VISTA) {
