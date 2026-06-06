@@ -27,3 +27,18 @@ bool Bme280Manager::iniciar() {
     return true;
 
 }
+
+float Bme280Manager::obtenerTemperatura() {
+    if (!sensorOperativo) return 0.0;
+    return bme.readTemperature();
+}
+
+float Bme280Manager::obtenerHumedad() {
+    if (!sensorOperativo) return 0.0;
+    return bme.readHumidity();
+}
+
+float Bme280Manager::obtenerPresion() {
+    if (!sensorOperativo) return 0.0;
+    return bme.readPressure() / 100.0F; 
+}
