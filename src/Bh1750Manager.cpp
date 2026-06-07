@@ -1,37 +1,45 @@
 #include "Bh1750Manager.h"
 
-Bh1750Manager::Bh1750Manager() {
-    sensorOperativo = false;
+Bh1750Manager::Bh1750Manager(uint8_t direccion, int sda, int scl) {
+    this->direccionI2C = direccion;
+    this->pinSDA = sda;
+    this->pinSCL = scl;
+    this->sensorOperativo = false;
 }
 
 bool Bh1750Manager::iniciar() {
-    Serial.println("[LUZ] Iniciando bus I2C exclusivo para BH1750...");
+    // Inicializar bus I2C en tus pines confiables 21 y 22
+    Wire.begin(pinSDA, pinSCL);
     
-    // Configura tus pines libres con buen espacio: GPIO 5 (SDA) y GPIO 23 (SCL)
-    bool busIniciado = Wire.begin(5, 23); 
-    
-    if (!busIniciado) {
-        Serial.println("[ERROR] No se pudo inicializar el bus I2C en pines 5 y 23.");
-        return false;
-    }
-
-    Serial.println("[LUZ] Buscando sensor BH1750 en pines 5 y 23...");
-    
-    // Pasamos el modo de alta resolución, la dirección 0x23 y el puntero al bus &Wire
-    if (!lightSensor.begin(BH1750::CONTINUOUS_HIGH_RES_MODE, 0x23, &Wire)) {
-        Serial.println("[ERROR] ¡No se encontró el BH1750! Revisa pines 5/23 o energía.");
+    // Arrancar el sensor en el modo continuo de alta resolución
+    if (!luxometro.begin(BH1750::CONTINUOUS_HIGH_RES_MODE, direccionI2C, &Wire)) {
+        Serial.println("Error crítico: ¡No se encuentra el sensor BH1750!.");
         sensorOperativo = false;
         return false;
     }
     
-    Serial.println("[LUZ] ¡Sensor BH1750 detectado en pines 5 y 23 con éxito!");
+    Serial.println("Sensor de Luz BH1750 inicializado correctamente.");
     sensorOperativo = true;
     return true;
 }
 
-float Bh1750Manager::obtenerLuz() {
+float Bh1750Manager::obtenerLux() {
     if (!sensorOperativo) return 0.0;
+    return luxometro.readLightLevel(); // Retorna la lectura real en Lux (lx)
+}
 
-    // Retorna el valor real en Lux 
-    return lightSensor.readLightLevel(); 
+void Bh1750Manager::mostrarLecturaSerial() {
+    float lux = obtenerLux();
+    
+    Serial.println("----- MONITOREO DE LUMINOSIDAD -----");
+    Serial.print("Intensidad de Luz: ");
+    Serial.print(lux);
+    Serial.println(" lx");
+    
+    if (lux < 10) Serial.println("Estado: 🌑 Oscuridad total / Noche");
+    else if (lux < 150) Serial.println("Estado: 💡 Iluminación de interiores tenue");
+    else if (lux < 500) Serial.println("Estado: 🖥️ Oficina / Laboratorio bien iluminado");
+    else Serial.println("Estado: ☀️ Luz solar directa / Exterior brillante");
+    
+    Serial.println("------------------------------------\n");
 }
