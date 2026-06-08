@@ -61,17 +61,17 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
         // Recuadro de Humedad en color cian
         tft.drawRect(10, 45, 300, 45, TFT_CYAN);
-        mostrarTexto("HUM: " + String(hum, 1) + " %", 20, 58, 2, TFT_CYAN, TFT_NAVY);
+        mostrarTexto("HUMEDAD: " + String(hum, 1) + " %", 20, 58, 2, TFT_CYAN, TFT_NAVY);
 
         // Recuadro de Iluminación en color amarillo (Muestra Lux y el Estado textual)
         tft.drawRect(10, 98, 300, 45, TFT_YELLOW);
-        mostrarTexto("LUZ: " + String(lux, 0) + " lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
+        mostrarTexto("LUZ: " + String(lux, 0) + " Lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
         // Pintamos el diagnóstico natural corrido a la derecha (X=160) para que no se pisen
         mostrarTexto(estadoLuz, 160, 111, 2, TFT_WHITE, TFT_NAVY);
         
         // Recuadro de Presión Atmosférica en color rojo
         tft.drawRect(10, 151, 300, 45, TFT_RED);
-        mostrarTexto("PRES: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_RED, TFT_NAVY);
+        mostrarTexto("PRESION: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_RED, TFT_NAVY);
         
         // Texto de navegación actualizado para el uso del botón físico
         mostrarTexto("-> Pulsar boton para regresar", 50, 204, 1, TFT_SILVER, TFT_NAVY);
