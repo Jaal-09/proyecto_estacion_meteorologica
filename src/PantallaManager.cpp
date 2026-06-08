@@ -58,6 +58,31 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         mostrarTexto("-> Pulsar boton para ver mas", 50, 200, 1, TFT_SILVER, TFT_NAVY);
     } 
     else {
+
+        // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
+    // Recuadro de Humedad
+    tft.drawRect(10, 45, 300, 45, TFT_CYAN);
+    mostrarTexto("HUM: " + String(hum, 1) + " %", 20, 58, 2, TFT_CYAN, TFT_NAVY);
+
+    // =========================================================================
+    // 🛠️ RECUADRO DE LUZ CORREGIDO (Evita el efecto fantasma 'lxlx')
+    // =========================================================================
+    tft.drawRect(10, 98, 300, 45, TFT_YELLOW);
+
+    // 1. Borramos el fondo del recuadro de texto antes de pintar para desaparecer residuos viejos
+    
+
+    // 2. Pintamos los Luxes asegurando que el color de fondo (TFT_NAVY) obligue a borrar los píxeles anteriores
+    
+
+    // 3. Pintamos el estado al lado sin emojis y bien alineado
+    mostrarTexto(estadoLuz, 170, 111, 2, TFT_WHITE, TFT_NAVY);
+    // =========================================================================
+
+    // Recuadro de Presión Atmosférica
+    tft.drawRect(10, 151, 300, 45, TFT_RED);
+    mostrarTexto("PRES: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_RED, TFT_NAVY);
+
         // ================= VISTA 2: DETALLES (HUMEDAD, LUZ Y PRESIÓN) =================
         // Recuadro de Humedad en color cian
         tft.drawRect(10, 45, 300, 45, TFT_CYAN);
@@ -65,7 +90,12 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
 
         // Recuadro de Iluminación en color amarillo (Muestra Lux y el Estado textual)
         tft.drawRect(10, 98, 300, 45, TFT_YELLOW);
-        mostrarTexto("LUZ: " + String(lux, 0) + " Lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
+
+        //para evitar errores al pintar
+        tft.fillRect(11, 99, 298, 43, TFT_NAVY); 
+
+        
+        mostrarTexto("LUZ: " + String(lux, 0) + " lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
         // Pintamos el diagnóstico natural corrido a la derecha (X=160) para que no se pisen
         mostrarTexto(estadoLuz, 160, 111, 2, TFT_WHITE, TFT_NAVY);
         
@@ -79,5 +109,5 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
 
     // Pie de página institucional estático
     tft.drawLine(0, 218, 320, 218, TFT_SILVER);
-    mostrarTexto("U. DE PAMPLONA - MECATRÓNICA", 45, 224, 1, TFT_SILVER, TFT_NAVY);
+    mostrarTexto("U. DE PAMPLONA - MECATRONICA", 45, 224, 1, TFT_SILVER, TFT_NAVY);
 }
