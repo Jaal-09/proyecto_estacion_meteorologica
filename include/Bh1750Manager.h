@@ -17,7 +17,6 @@
  * @class Bh1750Manager
  * @brief Clase mánager para gestionar el sensor de iluminancia BH1750.
  */
-
 class Bh1750Manager {
 private:
     BH1750 luxometro;       /**< Instancia interna de la librería base del sensor BH1750. */
@@ -27,7 +26,6 @@ private:
     bool sensorOperativo;   /**< Bandera de seguridad; se pone en true si el sensor responde en el arranque. */
 
 public:
-
     /**
      * @brief Constructor del mánager del sensor de luz.
      * @details Prepara las configuraciones iniciales de dirección y pines sin arrancar el bus todavía.
@@ -50,6 +48,21 @@ public:
      * @return Valor flotante de la intensidad de luz calculada en Lux (lx).
      */
     float obtenerLux();
+
+    /**
+     * @brief Alias compatible para obtener la lectura de luz.
+     * @details Apunta directamente a obtenerLux() para mantener la compatibilidad con los llamados del main.cpp.
+     * @return Valor flotante en Lux.
+     */
+    float obtenerLuz();
+
+    /**
+     * @brief Obtiene una descripción textual y natural del estado de iluminación.
+     * @details Analiza los luxes actuales y devuelve una cadena con un emoji y el diagnóstico 
+     * ambiental para que pueda ser mostrado directamente en la pantalla TFT o en el Serial.
+     * @return String Cadena de texto con el diagnóstico (ej: "Interior Tenue 💡").
+     */
+    String obtenerEstadoTexto();
 
     /**
      * @brief Envía la lectura de iluminancia directo al Monitor Serie.
