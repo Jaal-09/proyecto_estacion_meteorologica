@@ -98,8 +98,8 @@ El entorno de compilación está gestionado por las siguientes dependencias ofic
    │   └── main.cpp
    └── platformio.ini
    ```
-   
-## 📚 Referencias técnicas y documentación
+
+## 📚 Referencias
 
 1. **Espressif Systems (2022).** *ESP32 Technical Reference Manual*. 
    [Official Hardware Documentation](https://www.espressif.com/en/support/documents/technical-documents)
