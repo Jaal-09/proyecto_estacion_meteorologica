@@ -60,7 +60,7 @@ public:
      * @brief Obtiene una descripción textual y natural del estado de iluminación.
      * @details Analiza los luxes actuales y devuelve una cadena con un emoji y el diagnóstico 
      * ambiental para que pueda ser mostrado directamente en la pantalla TFT o en el Serial.
-     * @return String Cadena de texto con el diagnóstico (ej: "Interior Tenue 💡").
+     * @return String Cadena de texto con el diagnóstico.
      */
     String obtenerEstadoTexto();
 

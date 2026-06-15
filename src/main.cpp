@@ -41,6 +41,8 @@ const char* WIFI_PASS = "wifi1234";
  * @details Inicializa los periféricos, define el comportamiento del GPIO del botón con Pull-Up,
  * levanta los buses de comunicación y realiza la sincronización horaria inicial.
  */
+
+
 void setup() {
     Serial.begin(115200);
     delay(500);
@@ -56,7 +58,7 @@ void setup() {
     // Inicia el bus Wire nativo en los pines 21 y 22 para el luxómetro
     miLuz.iniciar();       
     
-    miPantalla.mostrarTexto("Sincronizando hora ...", 10, 100, 2, TFT_WHITE, TFT_NAVY);
+    miPantalla.mostrarTexto("Iniciando Sistema NTP...", 15, 100, 2, TFT_WHITE, TFT_NAVY);
     
     // Llamamos a la sincronización automática por Wi-Fi para poner a punto el RTC
     miReloj.sincronizarHoraPorWiFi(WIFI_SSID, WIFI_PASS);

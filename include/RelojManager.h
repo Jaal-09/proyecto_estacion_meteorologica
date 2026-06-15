@@ -55,7 +55,7 @@ public:
     void sincronizarHoraPorWiFi(const char* ssid, const char* password);
 
     /**
-     * @brief Entrega la hora actual formateada de forma elegante para la pantalla TFT.
+     * @brief Entrega la hora actual formateada para la pantalla TFT.
      * @details Consulta los registros actuales del RTC y devuelve una cadena lista con formato de reloj digital.
      * @return String Cadena de texto con el formato "HH:MM:SS".
      */

@@ -39,9 +39,19 @@ void PantallaManager::mostrarTexto(String texto, int x, int y, int tamano, uint1
 }
 
 void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz) {
-    // Banner Superior Común para ambas vistas
+    // ================= Banner Superior Común para ambas vistas =================
     tft.fillRect(0, 0, 320, 38, TFT_BLUE);
-    mostrarTexto("ESTACION METEOROLOGICA", 30, 10, 2, TFT_WHITE, TFT_BLUE);
+    
+    // Dibujamos la nube al lado derecho
+    int cloudX = 40;
+    int cloudY = 10;
+    tft.fillCircle(cloudX, cloudY + 10, 8, TFT_WHITE);       // Esfera izquierda
+    tft.fillCircle(cloudX + 8, cloudY + 4, 10, TFT_WHITE);   // Esfera central superior
+    tft.fillCircle(cloudX + 18, cloudY + 8, 9, TFT_WHITE);   // Esfera derecha
+    tft.fillRect(cloudX, cloudY + 12, 18, 7, TFT_WHITE);     // Base plana para unir los círculos
+
+    // Nombre en el banner
+    mostrarTexto("METEOROS-32", 95, 10, 2, TFT_WHITE, TFT_BLUE);
 
     if (vistaActual == 1) {
         // ================= VISTA 1: TIEMPO Y TEMPERATURA =================
@@ -71,14 +81,14 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         tft.fillRect(11, 99, 298, 43, TFT_NAVY); 
         
         mostrarTexto("LUZ: " + String(lux, 0) + " lx", 20, 111, 2, TFT_YELLOW, TFT_NAVY);
-        // Pintamos el diagnóstico natural corrido a la derecha (X=160) para que no se pisen
+        // Pintamos el diagnóstico natural corrido a la derecha 
         mostrarTexto(estadoLuz, 160, 111, 2, TFT_WHITE, TFT_NAVY);
         
-        // 3. Recuadro de Presión Atmosférica en color rojo
+        // 3. Recuadro de Presión Atmosférica en color Naranja
         tft.drawRect(10, 151, 300, 45, TFT_ORANGE);
         mostrarTexto("PRESION: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_ORANGE, TFT_NAVY);
         
-        // Texto de navegación actualizado para el uso del botón físico
+        // Texto de navegación para el uso del botón físico
         mostrarTexto("-> Pulsar boton para regresar", 50, 204, 1, TFT_SILVER, TFT_NAVY);
     }
 
