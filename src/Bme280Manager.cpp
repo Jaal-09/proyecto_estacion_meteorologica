@@ -66,7 +66,7 @@ float Bme280Manager::obtenerPresion() {
 
 String Bme280Manager::obtenerEstadoTexto() {
     // Si el sensor se desconecta o falla, devolvemos un aviso seguro
-    if (!sensorOperativo) return "❌ ERROR";
+    if (!sensorOperativo) return " ERROR";
 
     float presion = obtenerPresion();
     

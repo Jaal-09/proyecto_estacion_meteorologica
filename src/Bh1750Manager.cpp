@@ -39,7 +39,7 @@ float Bh1750Manager::obtenerLux() {
 
 String Bh1750Manager::obtenerEstadoTexto() {
     // Si el sensor falló desde el inicio, retornamos un aviso seguro
-    if (!sensorOperativo) return "❌ Desconectado";
+    if (!sensorOperativo) return "Desconectado";
 
     float lux = obtenerLux();
     
