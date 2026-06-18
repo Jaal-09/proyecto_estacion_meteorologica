@@ -44,9 +44,9 @@ String Bh1750Manager::obtenerEstadoTexto() {
     float lux = obtenerLux();
     
     // Clasificación del ambiente según la cantidad de luz recibida
-    if (lux < 10)       return " Oscuro";
-    if (lux < 150)      return " Tenue";
-    if (lux < 500)      return " Claro";
+    if (lux < 15)       return " Oscuro";
+    if (lux < 800)      return " Tenue";
+    if (lux < 12000)      return " Claro";
     
     return " Soleado";
 }

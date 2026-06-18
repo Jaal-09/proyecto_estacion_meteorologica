@@ -46,7 +46,12 @@ float Bme280Manager::obtenerTemperatura() {
 
     // Si el sensor falló en el arranque, evitamos lecturas basura y devolvemos cero seguro
     if (!sensorOperativo) return 0.0;
-    return bme.readTemperature(); // Retorna la temperatura real en grados Celsius (°C)
+    float tempRaw = bme.readTemperature(); // Retorna la temperatura real en grados Celsius (°C)
+    // Compensación (Offset) por el calor residual del ESP32 y la pantalla TFT
+    // Restamos 2.5 °C para calibrarla al ambiente real del laboratorio
+    float tempCorregida = tempRaw - 3; 
+    
+    return tempCorregida;
 }
 
 float Bme280Manager::obtenerHumedad() {
