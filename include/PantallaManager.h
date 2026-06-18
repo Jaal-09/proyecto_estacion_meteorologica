@@ -69,9 +69,9 @@ public:
      * @param hum Valor del porcentaje de humedad relativa (% RH).
      * @param lux Valor de la intensidad luminosa capturada por el luxómetro.
      * @param presion Valor de la presión atmosférica actual calculada en Hectopascales (hPa).
-     * @param estadoLuz Texto natural generado por el mánager del BH1750 que describe la iluminación (ej: "Interior Tenue 💡").
+     * @param estadoLuz Texto generado por el mánager del BH1750 que describe la iluminación.
      */
-    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz);
+    void actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz, String estadoPresion);
 };
 
 #endif

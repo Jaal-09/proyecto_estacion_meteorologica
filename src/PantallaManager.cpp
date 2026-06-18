@@ -16,7 +16,7 @@ PantallaManager::PantallaManager() {
 void PantallaManager::iniciar() {
     tft.init();
 
-    // Configuración en modo horizontal (Formato paisaje para pantallas de 320x240)
+    // Configuración en modo horizontal (320x240)
     tft.setRotation(1);       
     limpiarPantalla(TFT_NAVY); 
 }
@@ -38,7 +38,7 @@ void PantallaManager::mostrarTexto(String texto, int x, int y, int tamano, uint1
     tft.drawString(texto, x, y); 
 }
 
-void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz) {
+void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz, String estadoPresion) {
     // ================= Banner Superior Común para ambas vistas =================
     tft.fillRect(0, 0, 320, 38, TFT_BLUE);
     
@@ -86,7 +86,14 @@ void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, 
         
         // 3. Recuadro de Presión Atmosférica en color Naranja
         tft.drawRect(10, 151, 300, 45, TFT_ORANGE);
-        mostrarTexto("PRESION: " + String(presion, 1) + " hPa", 20, 164, 2, TFT_ORANGE, TFT_NAVY);
+        
+        //Borrar para no dejar residuos
+        tft.fillRect(11, 152, 298, 43, TFT_NAVY); 
+        
+        mostrarTexto("PRES: " + String(presion, 1) + " hPa", 10, 164, 2, TFT_ORANGE, TFT_NAVY);
+        
+        //Pintar estado segun la presión
+        mostrarTexto(estadoPresion, 200, 164, 2, TFT_WHITE, TFT_NAVY);
         
         // Texto de navegación para el uso del botón físico
         mostrarTexto("-> Pulsar boton para regresar", 50, 204, 1, TFT_SILVER, TFT_NAVY);

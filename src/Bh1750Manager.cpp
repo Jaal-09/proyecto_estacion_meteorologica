@@ -44,11 +44,11 @@ String Bh1750Manager::obtenerEstadoTexto() {
     float lux = obtenerLux();
     
     // Clasificación del ambiente según la cantidad de luz recibida
-    if (lux < 10)       return " Oscuridad";
-    if (lux < 150)      return " Interior";
-    if (lux < 500)      return " Iluminado";
+    if (lux < 10)       return " Oscuro";
+    if (lux < 150)      return " Tenue";
+    if (lux < 500)      return " Claro";
     
-    return " Exterior";
+    return " Soleado";
 }
 
 void Bh1750Manager::mostrarLecturaSerial() {

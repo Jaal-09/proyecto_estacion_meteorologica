@@ -58,6 +58,13 @@ public:
      * @return Valor flotante de la presión atmosférica en hPa.
      */
     float obtenerPresion();
+
+    /**
+     * @brief Obtiene la categorización del estado del clima según la presión barométrica.
+     * @details Evalúa el valor de la presión en hPa y clasifica el ambiente en tres niveles dinámicos adaptados localmente a la altitud de Pamplona (Lluvioso, Nublado o Despejado).
+     * @return String con el nombre del estado meteorológico actual ("Lluvioso", "Nublado", "Despejado" o aviso de error).
+     */
+    String obtenerEstadoTexto();
 };
 
 #endif

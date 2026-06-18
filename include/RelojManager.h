@@ -3,7 +3,7 @@
  * @brief Control de tiempo unificado mediante RTC DS1307 y sincronización Wi-Fi NTP.
  * @details Esta clase se encarga de gestionar el reloj de tiempo real (RTC) de la estación.
  * Permite conectarse a una red inalámbrica para sincronizar la hora exacta desde internet 
- * y luego mantenerla de forma local con total precisión.
+ * y luego mantenerla de forma local.
  * @date Junio 2026
  */
 

@@ -63,3 +63,17 @@ float Bme280Manager::obtenerPresion() {
     // a Hectopascales (hPa), que es la unidad que espera la interfaz gráfica.
     return bme.readPressure() / 100.0F; 
 }
+
+String Bme280Manager::obtenerEstadoTexto() {
+    // Si el sensor se desconecta o falla, devolvemos un aviso seguro
+    if (!sensorOperativo) return "❌ ERROR";
+
+    float presion = obtenerPresion();
+    
+    // Clasificación en cascada según los rangos calibrados para la altitud
+    if (presion < 775.0)  return "Lluvioso";
+    if (presion <= 784.0) return "Nublado";
+    
+    return "Despejado";
+}
+

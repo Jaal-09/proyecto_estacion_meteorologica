@@ -1,6 +1,6 @@
 /**
  * @file main.cpp
- * @brief Ciclo principal y coordinación de la Estación Meteorológica IoT.
+ * @brief Ciclo principal y coordinación de la Estación Meteorológica METEOROS-32.
  * @details Este programa coordina de manera eficiente la lectura síncrona de múltiples 
  * sensores ambientales (BME280 y BH1750), gestiona el tiempo a través de un chip local RTC 
  * calibrado por internet (NTP) y maneja la navegación de pantallas mediante un pulsador físico.
@@ -41,8 +41,6 @@ const char* WIFI_PASS = "wifi1234";
  * @details Inicializa los periféricos, define el comportamiento del GPIO del botón con Pull-Up,
  * levanta los buses de comunicación y realiza la sincronización horaria inicial.
  */
-
-
 void setup() {
     Serial.begin(115200);
     delay(500);
@@ -68,13 +66,13 @@ void setup() {
 
 /**
  * @brief Bucle de ejecución infinita del firmware.
- * @details Se encarga de dos procesos en paralelo:\n
+ * @details Se encarga de dos procesos en paralelo:
  * 1. Monitoreo temporal (cada 1s) para leer sensores y repintar la interfaz gráfica.\n
  * 2. Monitoreo por flancos para detectar pulsaciones instantáneas en el botón externo.
  */
 void loop() {
 
-    // ================= 1. REFRESH DE DATOS (Temporizado cada 1 segundo) =================
+    // ================= 1. REFRESH DE DATOS  =================
     if (millis() - tiempoUltimaActualizacion >= INTERVALO_TFT) {
         tiempoUltimaActualizacion = millis();
         
@@ -93,16 +91,19 @@ void loop() {
         float h_real = miBme.obtenerHumedad();
         float p_real = miBme.obtenerPresion();     
         
+        // Captura del estado del clima según la presión barométrica (Pamplona)
+        String estadoPresion = miBme.obtenerEstadoTexto();
+        
         // Captura de luminosidad y procesamiento de su diagnóstico textual (Bus Wire nativo)
         float l_real = miLuz.obtenerLux(); 
         String estadoLuz = miLuz.obtenerEstadoTexto();
 
-        // Reporte rápido por el Monitor Serie para verificar el correcto flujo del programa
-        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %% | Pres: %.1f hPa | Luz: %.1f lx | %s\n", 
-                      t_real, h_real, p_real, l_real, estadoLuz.c_str());
+        // Reporte rápido por el Monitor Serie incluyendo ahora el diagnóstico barométrico
+        Serial.printf("[SISTEMA] Temp: %.1f C | Hum: %.1f %% | Pres: %.1f hPa (%s) | Luz: %.1f lx | %s\n", 
+                      t_real, h_real, p_real, estadoPresion.c_str(), l_real, estadoLuz.c_str());
         
-        // Renderizado dinámico en la pantalla pasando los 7 parámetros requeridos
-        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_real, p_real, estadoLuz);
+        // Renderizado dinámico en la pantalla pasando los 8 parámetros requeridos
+        miPantalla.actualizarInterfaz(horaActual, fechaActual, t_real, h_real, l_real, p_real, estadoLuz, estadoPresion);
     }
 
     // ================= 2. DETECCIÓN DEL BOTÓN FÍSICO =================
