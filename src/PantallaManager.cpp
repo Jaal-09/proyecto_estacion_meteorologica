@@ -39,16 +39,54 @@ void PantallaManager::mostrarTexto(String texto, int x, int y, int tamano, uint1
 }
 
 void PantallaManager::actualizarInterfaz(String hora, String fecha, float temp, float hum, float lux, float presion, String estadoLuz, String estadoPresion) {
+
     // ================= Banner Superior Común para ambas vistas =================
     tft.fillRect(0, 0, 320, 38, TFT_BLUE);
     
-    // Dibujamos la nube al lado derecho
+    // Coordenadas base para el icono del clima (al lado izquierdo del título)
     int cloudX = 40;
     int cloudY = 10;
-    tft.fillCircle(cloudX, cloudY + 10, 8, TFT_WHITE);       // Esfera izquierda
-    tft.fillCircle(cloudX + 8, cloudY + 4, 10, TFT_WHITE);   // Esfera central superior
-    tft.fillCircle(cloudX + 18, cloudY + 8, 9, TFT_WHITE);   // Esfera derecha
-    tft.fillRect(cloudX, cloudY + 12, 18, 7, TFT_WHITE);     // Base plana para unir los círculos
+
+    // Logica Iconos dinamicos segun presión barometrica
+    if (estadoPresion == "Despejado") {
+        // --- DIBUJAR UN SOL RADIANTE ---
+        int centerX = cloudX + 9;
+        int centerY = cloudY + 9;
+        tft.fillCircle(centerX, centerY, 6, TFT_YELLOW); // Centro del sol
+        
+        // Rayos principales (Arriba, Abajo, Izquierda, Derecha)
+        tft.drawLine(centerX, centerY - 10, centerX, centerY - 7, TFT_YELLOW);
+        tft.drawLine(centerX, centerY + 7, centerX, centerY + 10, TFT_YELLOW);
+        tft.drawLine(centerX - 10, centerY, centerX - 7, centerY, TFT_YELLOW);
+        tft.drawLine(centerX + 7, centerY, centerX + 10, centerY, TFT_YELLOW);
+        
+        // Rayos diagonales
+        tft.drawLine(centerX - 7, centerY - 7, centerX - 5, centerY - 5, TFT_YELLOW);
+        tft.drawLine(centerX + 5, centerY + 5, centerX + 7, centerY + 7, TFT_YELLOW);
+        tft.drawLine(centerX + 5, centerY - 5, centerX + 7, centerY - 7, TFT_YELLOW);
+        tft.drawLine(centerX - 7, centerY + 7, centerX - 5, centerY + 5, TFT_YELLOW);
+    } 
+    else if (estadoPresion == "Lluvioso") {
+
+        // Dibujar nube con gotas de lluvia
+        int rainY = cloudY - 3; 
+        tft.fillCircle(cloudX, rainY + 10, 7, TFT_WHITE);
+        tft.fillCircle(cloudX + 8, rainY + 4, 9, TFT_WHITE);
+        tft.fillCircle(cloudX + 18, rainY + 8, 8, TFT_WHITE);
+        tft.fillRect(cloudX, rainY + 12, 18, 6, TFT_WHITE);
+        
+        // Gotas de lluvia inclinadas 
+        tft.drawLine(cloudX + 2, rainY + 20, cloudX, rainY + 24, TFT_CYAN);
+        tft.drawLine(cloudX + 9, rainY + 20, cloudX + 7, rainY + 24, TFT_CYAN);
+        tft.drawLine(cloudX + 16, rainY + 20, cloudX + 14, rainY + 24, TFT_CYAN);
+    } 
+    else { 
+        // Dibujar la nube ("Nublado")
+        tft.fillCircle(cloudX, cloudY + 10, 8, TFT_WHITE);       // Esfera izquierda
+        tft.fillCircle(cloudX + 8, cloudY + 4, 10, TFT_WHITE);   // Esfera central superior
+        tft.fillCircle(cloudX + 18, cloudY + 8, 9, TFT_WHITE);   // Esfera derecha
+        tft.fillRect(cloudX, cloudY + 12, 18, 7, TFT_WHITE);     // Base plana para unir los círculos
+    }
 
     // Nombre en el banner
     mostrarTexto("METEOROS-32", 95, 10, 2, TFT_WHITE, TFT_BLUE);
