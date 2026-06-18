@@ -11,13 +11,11 @@ Desarrollado en **PlatformIO** bajo el framework de **Arduino**, el firmware apl
 * **Institución:** Universidad de Pamplona
 * **Programa:** Ingeniería Mecatrónica  
 * **Autores:**
-
-   Jesus Alberto Arias Lizcano
-   Andrés Stivent Cortés Gomez 
-   Darwin David Naranjo Calderón
-   Karen Daniela Suárez Rico
-
-* **Fecha:** Junio 2026    
+  * Jesus Alberto Arias Lizcano
+  * Andrés Stivent Cortés Gomez
+  * Darwin David Naranjo Calderón
+  * Karen Daniela Suárez Rico
+* **Fecha:** Junio 2026
 
 ---
 
