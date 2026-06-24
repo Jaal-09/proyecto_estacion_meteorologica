@@ -63,6 +63,18 @@ Para evitar colisiones de direcciones en el bus y disminuir la capacitancia par�
 
 ---
 
+## 📸 Diagramas UML y Conexiones
+
+![Diagrama de Clases UML](./images/DiagramaUML.png)
+
+*Modelado abstracto de la arquitectura de software, detallando la herencia de la clase Sensor y la composición de los mánagers de hardware.*
+
+![Diagrama de Conexiones Físicas](./images/DiagramaConexiones.png)
+
+*Montaje físico del ESP32, ordenamiento de sensores en protoboard y cableado del bus paralelo.*
+
+---
+
 ## 💻 Características del Firmware e Inmunidad a Fallos
 * **Algoritmo de Debounce Mecánico:** La conmutación de pantallas mediante el botón del GPIO 5 se gestiona mediante control por flanco de bajada combinada con un retardo controlado de 250ms para absorber rebotes eléctricos espurios.
 * **Aislamiento en Arranque:** Si un sensor se desconecta físicamente o falla en el arranque, la bandera `sensorOperativo` conmuta a `false`. El firmware evita bloqueos en el bucle principal (`loop`), devolviendo valores seguros `0.0` y notificando el estado en pantalla.
